@@ -1,0 +1,19 @@
+name: Transparency Compliance Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Verify documentation
+        run: |
+          echo "Checking for required governance files..."
+          test -f README.md || (echo "README missing!" && exit 1)
+          test -f CODE_OF_CONDUCT.md || (echo "Code of Conduct missing!" && exit 1)
+          test -f GOVERNANCE.md || (echo "Governance file missing!" && exit 1)
